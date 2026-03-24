@@ -1,0 +1,273 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import social from '../data/social.json';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  title = '!How Game Studio · Indie Games, Made Different',
+  description = 'Indian indie game studio crafting worlds that challenge and inspire. Makers of Dissonant and Krodha.',
+  ogImage = '/images/press/studio/youtube-banner-2048x1152.png',
+  jsonLd,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, 'https://nothowgamestudio.com').href;
+const ogImageUrl = new URL(ogImage, 'https://nothowgamestudio.com').href;
+
+const faviconSvg = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23DE1D49'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-size='22' font-weight='bold' fill='white'>!</text></svg>`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content="!How Game Studio" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" href={faviconSvg} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen cursor-none md:cursor-none">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" role="status" aria-label="Loading">
+      <div class="preloader-text">!HOW</div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Custom Cursor (desktop only) -->
+    <div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
+    <div class="custom-cursor-dot" id="custom-cursor-dot" aria-hidden="true"></div>
+
+    <!-- Film Grain Overlay -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // ========================================
+      // REDUCED MOTION CHECK
+      // ========================================
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ========================================
+      // PRELOADER
+      // ========================================
+      if (prefersReducedMotion) {
+        document.getElementById('preloader')?.classList.add('loaded');
+      } else {
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            document.getElementById('preloader')?.classList.add('loaded');
+          }, 1200);
+        });
+      }
+
+      // ========================================
+      // SCROLL PROGRESS BAR
+      // ========================================
+      const progressBar = document.getElementById('scroll-progress');
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+        if (progressBar) {
+          progressBar.style.transform = `scaleX(${progress})`;
+        }
+      });
+
+      // ========================================
+      // CUSTOM CURSOR
+      // ========================================
+      const cursor = document.getElementById('custom-cursor');
+      const cursorDot = document.getElementById('custom-cursor-dot');
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          if (cursorDot) {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+          }
+        });
+
+        function animateCursor() {
+          cursorX += (mouseX - cursorX) * 0.15;
+          cursorY += (mouseY - cursorY) * 0.15;
+          if (cursor) {
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+          }
+          requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.querySelectorAll('a, button, [data-cursor-hover]').forEach(el => {
+          el.addEventListener('mouseenter', () => cursor?.classList.add('hovering'));
+          el.addEventListener('mouseleave', () => cursor?.classList.remove('hovering'));
+        });
+      }
+
+      // ========================================
+      // SCROLL REVEAL (IntersectionObserver)
+      // ========================================
+      if (prefersReducedMotion) {
+        // Show everything immediately
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in, .stagger-children, .animated-hr, .split-text').forEach(el => {
+          el.classList.add('visible');
+        });
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in, .stagger-children, .animated-hr, .split-text').forEach(el => {
+          revealObserver.observe(el);
+        });
+      }
+
+      // ========================================
+      // SPLIT TEXT (character-level animation)
+      // ========================================
+      if (!prefersReducedMotion) {
+        document.querySelectorAll('.split-text').forEach(el => {
+          const text = el.textContent || '';
+          el.innerHTML = text.split('').map((char, i) =>
+            char === ' '
+              ? ' '
+              : `<span class="char" style="transition-delay: ${i * 0.03}s">${char}</span>`
+          ).join('');
+        });
+      }
+
+      // ========================================
+      // 3D TILT ON CARDS
+      // ========================================
+      if (!prefersReducedMotion) {
+        document.querySelectorAll('.tilt-card').forEach(card => {
+          card.addEventListener('mousemove', (e: Event) => {
+            const me = e as MouseEvent;
+            const el = card as HTMLElement;
+            const rect = el.getBoundingClientRect();
+            const x = me.clientX - rect.left;
+            const y = me.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / centerY * -8;
+            const rotateY = (x - centerX) / centerX * 8;
+            el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            (card as HTMLElement).style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+          });
+        });
+      }
+
+      // ========================================
+      // MAGNETIC BUTTONS
+      // ========================================
+      if (!prefersReducedMotion) {
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+          btn.addEventListener('mousemove', (e: Event) => {
+            const me = e as MouseEvent;
+            const el = btn as HTMLElement;
+            const rect = el.getBoundingClientRect();
+            const x = me.clientX - rect.left - rect.width / 2;
+            const y = me.clientY - rect.top - rect.height / 2;
+            el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+          });
+
+          btn.addEventListener('mouseleave', () => {
+            (btn as HTMLElement).style.transform = 'translate(0, 0)';
+          });
+        });
+      }
+
+      // ========================================
+      // MOUSE SPOTLIGHT ON DARK SECTIONS
+      // ========================================
+      document.querySelectorAll('.spotlight-section').forEach(section => {
+        const spotlight = document.createElement('div');
+        spotlight.classList.add('spotlight');
+        section.appendChild(spotlight);
+
+        section.addEventListener('mousemove', (e: Event) => {
+          const me = e as MouseEvent;
+          const rect = (section as HTMLElement).getBoundingClientRect();
+          spotlight.style.left = (me.clientX - rect.left) + 'px';
+          spotlight.style.top = (me.clientY - rect.top) + 'px';
+        });
+      });
+
+      // ========================================
+      // KONAMI CODE EASTER EGG
+      // ========================================
+      const konamiSequence = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+      let konamiIndex = 0;
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === konamiSequence[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiSequence.length) {
+            konamiIndex = 0;
+            document.body.style.filter = 'hue-rotate(180deg)';
+            const msg = document.createElement('div');
+            msg.innerHTML = '<p style="font-family:Bebas Neue;font-size:48px;color:#9DD4B9;">YOU FOUND THE SECRET!</p><p style="font-family:Space Grotesk;font-size:18px;color:#F5F5F7;margin-top:8px;">You\'re clearly our kind of player.</p>';
+            msg.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(17,17,20,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;';
+            msg.addEventListener('click', () => {
+              msg.remove();
+              document.body.style.filter = '';
+            });
+            document.body.appendChild(msg);
+          }
+        } else {
+          konamiIndex = 0;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+---
+import SocialLinks from './SocialLinks.astro';
+
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/games', label: 'GAMES' },
+  { href: '/about', label: 'ABOUT' },
+  { href: '/press', label: 'PRESS' },
+  { href: '/contact', label: 'CONTACT' },
+];
+---
+
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="glitch font-display text-white text-3xl tracking-wider hover:opacity-80 transition-opacity" data-text="!HOW" data-cursor-hover>!HOW</a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      {links.map(link => (
+        <a
+          href={link.href}
+          data-cursor-hover
+          class={`font-body font-medium text-sm uppercase tracking-[0.1em] transition-colors duration-200 hover:text-mint relative ${
+            currentPath === link.href || currentPath === link.href + '/'
+              ? 'text-snow'
+              : 'text-snow/70'
+          }`}
+        >
+          {link.label}
+          {(currentPath === link.href || currentPath === link.href + '/') && (
+            <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-mint rounded-full"></span>
+          )}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button id="menu-open" class="md:hidden text-snow" aria-label="Open menu" data-cursor-hover>
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[60] bg-crimson flex flex-col items-center justify-center gap-8 transform translate-x-full transition-transform duration-300">
+  <button id="menu-close" class="absolute top-6 right-6 text-white" aria-label="Close menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+
+  {links.map((link, i) => (
+    <a href={link.href} class="font-display text-white text-5xl tracking-wider hover:text-snow/80 transition-all duration-300 hover:tracking-[0.2em]" style={`transition-delay: ${i * 0.1}s`}>
+      {link.label}
+    </a>
+  ))}
+
+  <a href="/" class="font-body text-white text-sm uppercase tracking-wider mt-4">Home</a>
+
+  <div class="absolute bottom-12">
+    <SocialLinks color="white" />
+  </div>
+</div>
+
+<script>
+  function initNav() {
+    const nav = document.getElementById('main-nav');
+    const menuOpen = document.getElementById('menu-open');
+    const menuClose = document.getElementById('menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav?.classList.add('bg-night/95', 'backdrop-blur-lg');
+      } else {
+        nav?.classList.remove('bg-night/95', 'backdrop-blur-lg');
+      }
+    });
+
+    menuOpen?.addEventListener('click', () => {
+      mobileMenu?.classList.remove('translate-x-full');
+      mobileMenu?.classList.add('translate-x-0');
+      document.body.style.overflow = 'hidden';
+    });
+
+    menuClose?.addEventListener('click', () => {
+      mobileMenu?.classList.remove('translate-x-0');
+      mobileMenu?.classList.add('translate-x-full');
+      document.body.style.overflow = '';
+    });
+
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu?.classList.remove('translate-x-0');
+        mobileMenu?.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  initNav();
+</script>

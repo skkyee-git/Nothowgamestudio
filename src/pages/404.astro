@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 · !How Game Studio">
+  <section class="min-h-screen bg-crimson flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+    <!-- Decorative -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 border border-white/5 rounded-full"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-48 h-48 border border-white/5 rotate-45"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-crimson-dark/20 blur-3xl"></div>
+    </div>
+
+    <div class="relative z-10">
+      <p class="glitch font-display text-white text-[160px] md:text-[220px] leading-none" data-text="!">!</p>
+      <h1 class="split-text font-display text-white text-[24px] md:text-[36px] leading-snug mb-4 max-w-lg">YOU'VE WANDERED INTO UNCHARTED TERRITORY</h1>
+      <p class="font-body text-snow/80 text-lg mb-8">This page doesn't exist. But our games do.</p>
+      <a href="/" class="magnetic-btn inline-block bg-charcoal text-white font-body font-medium text-sm uppercase tracking-[0.1em] rounded-lg px-10 py-4 hover:bg-night transition-colors">TAKE ME HOME</a>
+    </div>
+  </section>
+</BaseLayout>

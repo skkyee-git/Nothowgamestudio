@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import games from '../data/games.json';
+
+const videoGameSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Dissonant",
+  "description": "A patience test disguised as a game. Control Vil through a mesmerizing realm governed by the all-seeing Observer. Simple mechanics you can play with 1 or 2 buttons.",
+  "genre": ["Puzzle", "Arcade", "Difficult", "Physics", "Souls-like"],
+  "gamePlatform": ["PC", "Steam"],
+  "url": "https://store.steampowered.com/app/3006030/Dissonant/",
+  "image": "https://nothowgamestudio.com/images/games/dissonant-capsule.png",
+  "author": {
+    "@type": "Organization",
+    "name": "!How Game Studio"
+  },
+  "operatingSystem": "Windows"
+};
+---
+
+<BaseLayout title="Games · !How Game Studio" description="Explore games by !How Game Studio. Dissonant, Krodha, and more." jsonLd={videoGameSchema}>
+  <!-- HERO -->
+  <section class="bg-crimson pt-32 pb-20 px-6 text-center relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-20 right-20 w-64 h-64 border border-white/5 rounded-full"></div>
+      <div class="absolute bottom-10 left-10 w-40 h-40 border border-white/5 rotate-45"></div>
+    </div>
+    <h1 class="split-text font-display text-white text-[64px] md:text-[80px] leading-none relative z-10">OUR GAMES</h1>
+    <p class="font-body text-snow/80 text-lg mt-4 relative z-10 fade-in">Every game we make is a statement.</p>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="bg-night py-3 overflow-hidden border-y border-fade/30">
+    <div class="marquee-track">
+      {[...Array(2)].map(() => (
+        <div class="flex items-center gap-8 px-4">
+          {games.map(g => (
+            <>
+              <span class="font-display text-crimson text-lg whitespace-nowrap">{g.title.toUpperCase()}</span>
+              <span class="text-fade">///</span>
+              <span class="font-body text-smoke text-sm whitespace-nowrap uppercase tracking-wider">{g.status.toUpperCase()}</span>
+              <span class="text-fade">///</span>
+            </>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- GAMES -->
+  {games.map((game, index) => (
+    <>
+      <section class="bg-charcoal py-24 px-6 spotlight-section">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <!-- Text -->
+          <div class={index % 2 !== 0 ? 'lg:order-2' : ''}>
+            <p class="text-mint uppercase tracking-[0.2em] font-body font-medium text-[13px] mb-3 fade-in">{game.status.toUpperCase()}</p>
+            <h2 class="split-text font-display text-snow text-[52px] md:text-[64px] leading-none mb-4">{game.title.toUpperCase()}</h2>
+            <p class="text-smoke italic text-lg mb-6 fade-in">{game.tagline}</p>
+
+            <div class="flex flex-wrap gap-2 mb-6 stagger-children">
+              {game.genre.map(g => (
+                <span class="bg-mint/15 text-mint text-sm px-4 py-1.5 rounded-full font-body border border-mint/20">{g}</span>
+              ))}
+            </div>
+
+            <p class="text-smoke text-base leading-relaxed mb-8 fade-in">{game.description}</p>
+
+            {game.features.length > 0 && (
+              <div class="flex flex-wrap gap-2 mb-8 stagger-children">
+                {game.features.map(f => (
+                  <span class="bg-surface text-snow text-sm px-4 py-1.5 rounded-full font-body border border-fade/50">{f}</span>
+                ))}
+              </div>
+            )}
+
+            <blockquote class="border-l-4 border-mint pl-6 mb-8 fade-in-left">
+              <p class="font-display text-snow text-[24px] md:text-[30px] leading-snug">{game.pullQuote}</p>
+            </blockquote>
+
+            {game.playerQuote && (
+              <div class="bg-surface/50 rounded-lg p-4 border border-fade/50 mb-8 fade-in">
+                <p class="text-smoke italic text-sm">"{game.playerQuote}"</p>
+              </div>
+            )}
+
+            <div class="flex flex-wrap gap-4 fade-in">
+              {game.storeLinks.steam && (
+                <a href={game.storeLinks.steam} target="_blank" rel="noopener noreferrer" class="magnetic-btn bg-crimson text-white font-body font-medium text-sm uppercase tracking-[0.1em] rounded-lg px-8 py-3 hover:bg-crimson-dark transition-colors">WISHLIST ON STEAM</a>
+              )}
+              {game.storeLinks.itch && (
+                <a href={game.storeLinks.itch} target="_blank" rel="noopener noreferrer" class="magnetic-btn border border-mint text-mint font-body font-medium text-sm uppercase tracking-[0.1em] rounded-lg px-8 py-3 hover:bg-mint hover:text-charcoal transition-colors">PLAY ON ITCH.IO</a>
+              )}
+            </div>
+
+            {game.madeWith && (
+              <p class="text-fade text-sm mt-6 fade-in">Made with {game.madeWith}</p>
+            )}
+          </div>
+
+          <!-- Game art -->
+          <div class={`scale-in ${index % 2 !== 0 ? 'lg:order-1' : ''}`}>
+            <div class="space-y-4">
+              <div class="rounded-xl border border-fade overflow-hidden relative group">
+                <img src={game.screenshots[0]} alt={`${game.title} screenshot`} width="1920" height="1080" class="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent pointer-events-none"></div>
+              </div>
+              {game.screenshots.length > 1 && (
+                <div class="grid grid-cols-3 gap-2">
+                  {game.screenshots.slice(1, 4).map(src => (
+                    <div class="rounded-lg border border-fade/50 overflow-hidden group">
+                      <img src={src} alt={`${game.title} screenshot`} width="1920" height="1080" class="w-full aspect-video object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+              )}
+              <img src={game.logo} alt={`${game.title} logo`} width="800" height="300" class="h-8 opacity-60" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {index < games.length - 1 && (
+        <div class="h-1 bg-gradient-to-r from-transparent via-crimson to-transparent"></div>
+      )}
+    </>
+  ))}
+
+  <!-- CTA -->
+  <section class="bg-crimson py-20 px-6 text-center relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-crimson-dark/30 blur-3xl"></div>
+    </div>
+    <div class="fade-in relative z-10">
+      <h2 class="font-display text-white text-[40px] md:text-[52px] mb-4">More games in the forge.</h2>
+      <p class="font-body text-snow/80 text-lg mb-10">Follow us to stay in the loop.</p>
+      <a href="/contact" class="magnetic-btn inline-block bg-charcoal text-white font-body font-medium text-sm uppercase tracking-[0.1em] rounded-lg px-10 py-4 hover:bg-night transition-colors mb-8">GET IN TOUCH</a>
+      <div class="flex justify-center">
+        <SocialLinks color="white" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,39 @@
+[
+  {
+    "title": "Dissonant",
+    "slug": "dissonant",
+    "tagline": "A patience test disguised as a game.",
+    "description": "It doesn't adapt to you. It doesn't compromise. Win, and the reward isn't loot or stats - it's resilience. Control Vil through a mesmerizing realm governed by the all-seeing Observer. Simple mechanics you can play with 1 or 2 buttons. The challenge isn't complexity - it's keeping your head when the game refuses to meet you halfway.",
+    "genre": ["Puzzle", "Arcade", "Difficult", "Physics", "Souls-like"],
+    "platforms": ["steam", "itch"],
+    "status": "Coming Soon on Steam",
+    "features": ["One-Button Controls", "Deliberate Difficulty", "Physics-Based", "No Hand-Holding"],
+    "storeLinks": {
+      "steam": "https://store.steampowered.com/app/3006030/Dissonant/",
+      "itch": "https://howstudio.itch.io/dissonant"
+    },
+    "pullQuote": "No builds. No stats. No safety net. Just you, the controls, and the consequences.",
+    "playerQuote": "I hate this game but I also love it. So many deaths but you want to keep going. - Sudden Lee",
+    "madeWith": "Unity + Blender",
+    "cardImage": "/images/games/dissonant-header.png",
+    "screenshots": ["/images/games/dissonant-01.png", "/images/games/dissonant-02.png", "/images/games/dissonant-03.png", "/images/games/dissonant-04.png", "/images/games/dissonant-05.png", "/images/games/dissonant-06.png"],
+    "logo": "/images/games/dissonant-logo.png"
+  },
+  {
+    "title": "Krodha",
+    "slug": "krodha",
+    "tagline": "Anger forged into something worth fighting for.",
+    "description": "13 months in the making. From early prototype to a game built through iteration, refinement, and discarding ideas that didn't earn their place. Featuring an original soundtrack composed specifically for the game. Preparing for Early Access on Steam.",
+    "genre": ["Action", "Indie"],
+    "platforms": ["steam"],
+    "status": "In Development - Early Access Coming Soon",
+    "features": ["Original Soundtrack", "13+ Months in Development"],
+    "storeLinks": {},
+    "pullQuote": "Game development is rarely linear, but seeing the progress laid out makes the long nights feel worth it.",
+    "playerQuote": "",
+    "madeWith": "",
+    "cardImage": "/images/games/krodha-header.png",
+    "screenshots": ["/images/games/krodha-01.png", "/images/games/krodha-02.png", "/images/games/krodha-05.png", "/images/games/krodha-06.png"],
+    "logo": "/images/games/krodha-logo.png"
+  }
+]
