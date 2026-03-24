@@ -31,17 +31,42 @@ import team from '../data/team.json';
 
   <!-- TEAM -->
   <section class="bg-charcoal py-24 px-6 spotlight-section">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="split-text font-display text-snow text-[40px] text-center mb-16">THE TEAM</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
-        {team.map(member => (
+    <div class="max-w-6xl mx-auto">
+      <h2 class="split-text font-display text-snow text-[40px] text-center mb-6">THE TEAM</h2>
+      <p class="text-smoke text-center text-base mb-16 fade-in max-w-xl mx-auto">The people behind the pixels. A crew of designers, developers, and artists building worlds from Bangalore.</p>
+
+      <!-- Founders row — large featured cards -->
+      <div class="grid md:grid-cols-3 gap-5 mb-5 stagger-children">
+        {team.slice(0, 3).map((member, i) => (
           <div class="tilt-card">
-            <div class="bg-surface rounded-xl border border-fade p-8 text-center hover:border-mint transition-all duration-500 hover:shadow-[0_0_30px_rgba(157,212,185,0.15)] group">
-              <div class="w-28 h-28 rounded-full border-2 border-mint/50 mx-auto mb-6 bg-charcoal flex items-center justify-center group-hover:border-mint group-hover:shadow-[0_0_20px_rgba(157,212,185,0.2)] transition-all duration-500">
-                <span class="font-display text-fade text-3xl group-hover:text-mint transition-colors duration-300">{member.name.charAt(0)}</span>
+            <div class="relative bg-surface rounded-2xl border border-fade overflow-hidden group hover:border-mint transition-all duration-500 hover:shadow-[0_0_30px_rgba(157,212,185,0.15)]">
+              <!-- Gradient background unique per founder -->
+              <div class={`h-28 w-full ${i === 0 ? 'bg-gradient-to-br from-crimson/30 to-charcoal' : i === 1 ? 'bg-gradient-to-br from-mint/20 to-charcoal' : 'bg-gradient-to-br from-crimson/20 via-charcoal to-mint/10'}`}></div>
+              <!-- Avatar overlapping the gradient -->
+              <div class="flex flex-col items-center -mt-12 pb-8 px-6">
+                <div class="w-24 h-24 rounded-2xl border-2 border-surface bg-night flex items-center justify-center mb-4 group-hover:border-mint group-hover:shadow-[0_0_20px_rgba(157,212,185,0.25)] transition-all duration-500 rotate-3 group-hover:rotate-0">
+                  <span class="font-display text-mint text-3xl">{member.name.charAt(0)}</span>
+                </div>
+                <h3 class="font-body font-semibold text-snow text-lg mb-1">{member.name}</h3>
+                <p class="text-mint text-sm font-body font-medium">{member.role}</p>
               </div>
-              <h3 class="font-body font-semibold text-snow text-lg mb-1">{member.name}</h3>
-              <p class="text-smoke text-sm">{member.role}</p>
+              <!-- Decorative corner accent -->
+              <div class="absolute top-3 right-3 w-5 h-5 border-t border-r border-mint/0 group-hover:border-mint/40 transition-all duration-500"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Rest of team — uniform compact cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 stagger-children">
+        {team.slice(3).map((member) => (
+          <div class="tilt-card">
+            <div class="bg-surface rounded-xl border border-fade p-5 group hover:border-mint transition-all duration-500 hover:shadow-[0_0_20px_rgba(157,212,185,0.12)] text-center h-full flex flex-col items-center justify-center min-h-[140px]">
+              <div class="w-12 h-12 rounded-xl bg-night border border-fade flex items-center justify-center shrink-0 mb-3 group-hover:border-mint/50 transition-all duration-300">
+                <span class="font-display text-smoke text-lg group-hover:text-mint transition-colors">{member.name.charAt(0)}</span>
+              </div>
+              <h3 class="font-body font-semibold text-snow text-sm mb-0.5 truncate w-full">{member.name}</h3>
+              <p class="text-smoke/70 text-xs font-body leading-tight line-clamp-2 w-full">{member.role}</p>
             </div>
           </div>
         ))}
@@ -49,32 +74,90 @@ import team from '../data/team.json';
     </div>
   </section>
 
-  <!-- MANIFESTO -->
-  <section class="bg-crimson py-24 px-6 relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-1/3 left-0 w-full h-px bg-white/5"></div>
-      <div class="absolute top-2/3 left-0 w-full h-px bg-white/5"></div>
-    </div>
+  <!-- EVENT GALLERY -->
+  <section class="bg-charcoal py-24 px-6 border-t border-fade spotlight-section">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="split-text font-display text-snow text-[40px] text-center mb-4">OUT IN THE WILD</h2>
+      <p class="text-smoke text-center text-base mb-12 fade-in">Showcasing our games at indie events across India.</p>
 
-    <div class="max-w-4xl mx-auto space-y-16 relative z-10">
-      {[
-        "Games should make you feel something you didn't expect.",
-        "We'd rather ship one great game than ten forgettable ones.",
-        "Every bug is a feature we haven't understood yet."
-      ].map((quote, i) => (
-        <blockquote class={`text-center ${i % 2 === 0 ? 'fade-in' : i === 1 ? 'fade-in-left' : 'fade-in-right'}`}>
-          <p class="font-display text-white text-[32px] md:text-[44px] leading-snug">"{quote}"</p>
-        </blockquote>
-      ))}
+      <div class="grid md:grid-cols-2 gap-4 stagger-children">
+        <!-- Team pose at booth - hero image -->
+        <div class="md:col-span-2 rounded-xl overflow-hidden border border-fade group">
+          <img src="/images/team/team-booth-pose.jpeg" alt="!How Game Studio team at their booth with Krodha and Dissonant banners" width="1920" height="1080" class="w-full aspect-[21/9] object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+        </div>
+
+        <!-- Booth overview -->
+        <div class="rounded-xl overflow-hidden border border-fade group">
+          <img src="/images/team/booth-overview.jpeg" alt="!How Game Studio booth with players trying out games" width="1080" height="1080" class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+        </div>
+
+        <!-- Live demo -->
+        <div class="rounded-xl overflow-hidden border border-fade group">
+          <img src="/images/team/booth-demo.jpeg" alt="Players demoing Krodha at the !How Game Studio booth" width="1920" height="1080" class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+        </div>
+
+        <!-- Stage presentation -->
+        <div class="md:col-span-2 rounded-xl overflow-hidden border border-fade group">
+          <img src="/images/team/event-stage.jpeg" alt="!How Game Studio presenting at an indie game event" width="1920" height="1080" class="w-full aspect-[21/9] object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="bg-charcoal py-20 px-6 text-center spotlight-section">
-    <div class="fade-in">
-      <a href="/games" class="magnetic-btn inline-block text-mint font-body font-medium text-xl hover:underline transition-all group">
-        See what we've built <span class="inline-block group-hover:translate-x-2 transition-transform">&rarr;</span>
-      </a>
+  <hr class="animated-hr" />
+
+  <!-- MANIFESTO + CTA -->
+  <section class="bg-charcoal py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Manifesto cards -->
+      <div class="grid md:grid-cols-3 gap-5 mb-6 stagger-children">
+        {[
+          { quote: "Games should make you feel something you didn't expect.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>` },
+          { quote: "We'd rather ship one great game than ten forgettable ones.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>` },
+          { quote: "Every bug is a feature we haven't understood yet.", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>` }
+        ].map((item, i) => (
+          <div class="tilt-card">
+            <div class={`rounded-2xl p-8 md:p-10 flex flex-col justify-between min-h-[280px] group hover:shadow-[0_0_30px_rgba(157,212,185,0.12)] transition-all duration-500 ${
+              i === 0 ? 'bg-crimson' : i === 1 ? 'bg-gradient-to-br from-surface to-night border border-fade hover:border-mint' : 'bg-gradient-to-br from-crimson/80 to-crimson-dark'
+            }`}>
+              <div class={`w-12 h-12 rounded-xl flex items-center justify-center mb-8 ${
+                i === 1 ? 'bg-mint/10 text-mint' : 'bg-white/15 text-white'
+              }`}>
+                <Fragment set:html={item.icon} />
+              </div>
+              <p class={`font-display text-[24px] md:text-[28px] leading-snug ${i === 1 ? 'text-snow' : 'text-white'}`}>"{item.quote}"</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA cards row -->
+      <div class="grid md:grid-cols-2 gap-5 stagger-children">
+        <div class="tilt-card h-full">
+          <div class="bg-crimson rounded-2xl p-8 md:p-10 h-full group hover:shadow-[0_0_30px_rgba(222,29,73,0.2)] transition-all duration-500">
+            <div class="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-5 text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+            </div>
+            <h3 class="font-body font-semibold text-white text-xl mb-2">See Our Games</h3>
+            <p class="text-white/70 text-sm font-body mb-5">Explore the worlds we've built and the ones still in the forge.</p>
+            <a href="/games" class="magnetic-btn inline-flex items-center gap-2 bg-charcoal text-white font-body font-medium text-sm uppercase tracking-[0.1em] rounded-lg px-6 py-3 hover:bg-night transition-colors group/btn">
+              Explore <span class="inline-block group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+          </div>
+        </div>
+        <div class="tilt-card h-full">
+          <div class="bg-gradient-to-br from-surface to-night rounded-2xl p-8 md:p-10 border border-fade h-full group hover:border-mint hover:shadow-[0_0_30px_rgba(157,212,185,0.12)] transition-all duration-500">
+            <div class="w-12 h-12 rounded-xl bg-mint/10 flex items-center justify-center mb-5 text-mint">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="font-body font-semibold text-snow text-xl mb-2">Get in Touch</h3>
+            <p class="text-smoke text-sm font-body mb-5">Press, business, or just want to say hi. We're always up for a conversation.</p>
+            <a href="/contact" class="magnetic-btn inline-flex items-center gap-2 border border-mint text-mint font-body font-medium text-sm uppercase tracking-[0.1em] rounded-lg px-6 py-3 hover:bg-mint hover:text-charcoal transition-colors group/btn">
+              Contact <span class="inline-block group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>

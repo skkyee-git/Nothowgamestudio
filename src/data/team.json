@@ -1,5 +1,10 @@
 [
   { "name": "Ajith Viswanath RJ", "role": "Game Designer & Founding Member", "photo": "" },
-  { "name": "Sparsh Taneja", "role": "Team Member", "photo": "" },
-  { "name": "Nitin Chowdry K", "role": "Team Member", "photo": "" }
+  { "name": "Nitin Chowdry K", "role": "Co-Founder & Art Director", "photo": "" },
+  { "name": "Sparsh Taneja", "role": "Game Developer & Co-Founder", "photo": "" },
+  { "name": "Pratyush G.", "role": "Gameplay Programmer", "photo": "" },
+  { "name": "Satvik S.", "role": "Game Developer & Engineer", "photo": "" },
+  { "name": "Anmol Singh", "role": "3D Artist & Character Artist", "photo": "" },
+  { "name": "Arun Kurian", "role": "Gameplay Designer", "photo": "" },
+  { "name": "Murari Thatiko", "role": "Game Designer & Unity Developer", "photo": "" }
 ]
